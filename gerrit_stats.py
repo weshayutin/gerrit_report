@@ -25,20 +25,19 @@ open_changes = get(url, api_changes, query_khaleesi_open)
 #print(len(open_changes[0]))
 for change in open_changes[0]:
     if change['status'] == 'NEW':
-      #print("{0} {1} {2} {3}".format(change['status'], change['change_id'], change['project'], change['subject']))
       try:
         reviewers = get(url, api_changes + change['change_id'] + '/reviewers/')
       except ValueError:
-        #print('Invalid value found')
         continue
       for reviewer in reviewers:
-        if reviewer['name'] not in reviewers_count:
-          reviewers_count[reviewer['name']] = 1
-          reviewers_list[reviewer['name']] = []
-          reviewers_list[reviewer['name']].append([change['project'], change['change_id'], change['subject']])
-        else:
-          reviewers_count[reviewer['name']] += 1
-          reviewers_list[reviewer['name']].append([change['project'], change['change_id'], change['subject']])
+        if reviewer['approvals']['Code-Review'].encode('utf-8').strip() != '0':
+          if reviewer['name'] not in reviewers_count:
+            reviewers_count[reviewer['name']] = 1
+            reviewers_list[reviewer['name']] = []
+            reviewers_list[reviewer['name']].append([change['project'], change['change_id'], change['subject']])
+          else:
+            reviewers_count[reviewer['name']] += 1
+            reviewers_list[reviewer['name']].append([change['project'], change['change_id'], change['subject']])
 
 print("This is a list of gerrithub reviews and who is marked as a reviewer\n\n")
 
