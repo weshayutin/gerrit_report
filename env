@@ -1,0 +1,8 @@
+export code_eng=''
+export smtp=''
+
+#Report owner, basically the email FROM: variable
+export REPORT_OWNER=""
+
+#Report email list, a list of emails you would like the roll up report sent to
+export REPORT_LIST=""
