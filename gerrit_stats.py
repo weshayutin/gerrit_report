@@ -76,7 +76,7 @@ def report(project):
           item = [x.encode('utf-8') for x in item]
           msg += "    " + ", ".join(item) + "\n"
       msg += "\n\n"
-  email_send(os.environ['REPORT_OWNER'], os.environ['REPORT_OWNER'], project + ': gerrit reviews report', msg)
+  email_send(os.environ['REPORT_OWNER'], os.environ['REPORT_LIST'], project + ': gerrit reviews report', msg)
 
 reviewers_count = {}
 reviewers_list = {}
